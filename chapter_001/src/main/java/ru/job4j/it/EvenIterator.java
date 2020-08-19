@@ -13,7 +13,10 @@ public class EvenIterator implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
-        return value < numbers.length && numbers[value] % 2 == 0;
+        while (value < numbers.length && numbers[value] % 2 == 1) {
+            value++;
+        }
+        return value < numbers.length;
     }
 
     @Override
