@@ -2,29 +2,34 @@ package ru.job4j.it;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.stream.IntStream;
+import java.util.Objects;
 
 public class SimpleArray<T> implements Iterable<T> {
     private final T[] simpleArray;
+    private int count = 0;
 
-    public SimpleArray() {
-        simpleArray = (T[]) new Object[10];
+    public SimpleArray(int size) {
+        simpleArray = (T[]) new Object[size];
     }
 
     public void add(T model) {
-        IntStream.range(0, simpleArray.length)
-                .filter(index -> simpleArray[index] == null)
-                .findFirst().ifPresent(index -> simpleArray[index] = model);
+        while (count < simpleArray.length) {
+            if (simpleArray[count] == null) {
+                simpleArray[count] = model;
+                break;
+            }
+            count++;
+        }
     }
 
     public void set(int index, T model) {
-        simpleArray[index] = model;
+        simpleArray[Objects.checkIndex(index, count)] = model;
     }
 
-    public void remove(int removeIndex) {
-        simpleArray[removeIndex] = null;
-        IntStream.range(removeIndex, simpleArray.length)
-                .forEach(index -> simpleArray[index] = simpleArray[index + 1]);
+    public void remove(int index) {
+        System.arraycopy(simpleArray, Objects.checkIndex(index + 1, count), simpleArray, index, simpleArray.length - 1 - index);
+        simpleArray[simpleArray.length - 1] = null;
+        count--;
     }
 
     public T get(int index) {
