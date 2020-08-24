@@ -13,26 +13,23 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public void add(T model) {
-        while (count < simpleArray.length) {
-            if (simpleArray[count] == null) {
-                simpleArray[count] = model;
-                break;
-            }
-            count++;
-        }
+        simpleArray[count++] = model;
     }
 
     public void set(int index, T model) {
-        simpleArray[Objects.checkIndex(index, count)] = model;
+        Objects.checkIndex(index, count);
+        simpleArray[index] = model;
     }
 
     public void remove(int index) {
-        System.arraycopy(simpleArray, Objects.checkIndex(index + 1, count), simpleArray, index, simpleArray.length - 1 - index);
+        Objects.checkIndex(index, count);
+        System.arraycopy(simpleArray, index + 1, simpleArray, index, simpleArray.length - 1 - index);
         simpleArray[simpleArray.length - 1] = null;
         count--;
     }
 
     public T get(int index) {
+        Objects.checkIndex(index, count);
         return simpleArray[index];
     }
 
@@ -43,7 +40,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
-                return currentIndex < simpleArray.length && simpleArray[currentIndex] != null;
+                return currentIndex < count;
             }
 
             @Override
