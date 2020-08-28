@@ -11,14 +11,13 @@ public class SimpleArray<T> implements Iterable<T> {
     private int modCount = 0;
 
     public T get(int index) {
-        modCount++;
         Objects.checkIndex(index, count);
         return (T) container[index];
     }
 
     public void add(T model) {
         if (count == container.length - 1) {
-            grow(container.length + 1);
+            grow(container.length * 2);
             modCount++;
         }
         container[count++] = model;
