@@ -16,16 +16,20 @@ public class SimpleLinked<E> implements Iterable<E> {
             Node temp = head;
             while (temp.getNext() != null) {
                 temp = temp.getNext();
-                modCount++;
             }
             temp.setNext(new Node<E>(value));
         }
         size++;
+        modCount++;
     }
 
     public E get(int index) throws IllegalAccessException {
         int currentIndex = 0;
         Node temp = head;
+
+        if (index < 0 || index > size) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
 
         while (temp != null) {
             if (currentIndex == index) {
