@@ -30,6 +30,15 @@ public class SimpleArray<T> implements Iterable<T> {
         container = (T[]) newContainer;
     }
 
+    public boolean contains(T value) {
+        for (Object container : container) {
+            if (value.equals(container)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {

@@ -10,7 +10,9 @@ public class SimpleSet<E> implements Iterable<E> {
     }
 
     public void add(E value) {
-        simpleArray.add(value);
+        if (!simpleArray.contains(value)) {
+            simpleArray.add(value);
+        }
     }
 
     @Override

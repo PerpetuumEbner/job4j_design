@@ -2,7 +2,10 @@ package ru.job4j.collection;
 
 import org.junit.Test;
 
+import java.util.Iterator;
+
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 public class SimpleSetTest {
@@ -14,11 +17,30 @@ public class SimpleSetTest {
         assertThat(rsl, is("first"));
     }
 
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void whenAddDuplicate() {
+        SimpleSet<String> simpleSet = new SimpleSet<>();
+        simpleSet.add("first");
+        simpleSet.add("first");
+        assertThat(simpleSet.get(0), is("first"));
+        assertNull(simpleSet.get(1));
+    }
+
     @Test
     public void whenAddThenIt() {
         SimpleSet<String> simpleSet = new SimpleSet<>();
         simpleSet.add("first");
         String rsl = simpleSet.iterator().next();
         assertThat(rsl, is("first"));
+    }
+
+    @Test
+    public void whenAddThenItDuplicate() {
+        SimpleSet<String> simpleSet = new SimpleSet<>();
+        simpleSet.add("first");
+        simpleSet.add("first");
+        Iterator<String> iterator = simpleSet.iterator();
+        assertThat(iterator.next(), is("first"));
+        assertThat(iterator.hasNext(), is(false));
     }
 }
