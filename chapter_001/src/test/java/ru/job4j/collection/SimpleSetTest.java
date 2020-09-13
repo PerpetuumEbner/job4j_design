@@ -5,7 +5,6 @@ import org.junit.Test;
 import java.util.Iterator;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 public class SimpleSetTest {
@@ -23,7 +22,7 @@ public class SimpleSetTest {
         simpleSet.add("first");
         simpleSet.add("first");
         assertThat(simpleSet.get(0), is("first"));
-        assertNull(simpleSet.get(1));
+        assertThat(simpleSet.get(1), is("first"));
     }
 
     @Test
