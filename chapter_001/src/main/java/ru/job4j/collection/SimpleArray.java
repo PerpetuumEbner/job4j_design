@@ -31,8 +31,8 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public boolean contains(T value) {
-        for (Object container : container) {
-            if (value.equals(container)) {
+        for (Object cont : container) {
+            if (Objects.equals(value, cont)) {
                 return true;
             }
         }
