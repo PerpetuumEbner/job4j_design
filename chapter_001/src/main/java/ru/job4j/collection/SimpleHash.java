@@ -4,12 +4,11 @@ import java.util.*;
 
 public class SimpleHash<K, V> implements Iterable {
     private Entry<K, V>[] table;
-    private int size;
+    private int size = 16;
     private int modCount = 0;
 
-    public SimpleHash(Entry<K, V>[] table, int size) {
-        this.table = table;
-        this.size = size;
+    public SimpleHash() {
+        this.table = new Entry[size];
     }
 
     boolean insert(K key, V value) {
@@ -20,10 +19,6 @@ public class SimpleHash<K, V> implements Iterable {
                 entry.v = value;
                 modCount++;
                 size++;
-            } else {
-                while (entry.next != null) {
-                    entry = entry.next;
-                }
             }
             return true;
         } else {
@@ -40,7 +35,6 @@ public class SimpleHash<K, V> implements Iterable {
             if (entry.k.equals(key)) {
                 return (V) entry;
             }
-            entry = entry.next;
         }
         return null;
     }
@@ -60,11 +54,18 @@ public class SimpleHash<K, V> implements Iterable {
     public class Entry<K, V> {
         private K k;
         private V v;
-        private Entry next;
 
         public Entry(K k, V v) {
             this.k = k;
             this.v = v;
+        }
+
+        public K getK() {
+            return k;
+        }
+
+        public V getV() {
+            return v;
         }
     }
 
