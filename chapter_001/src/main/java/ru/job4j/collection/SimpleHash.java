@@ -18,23 +18,22 @@ public class SimpleHash<K, V> implements Iterable {
             if (entry.k.equals(key)) {
                 entry.v = value;
                 modCount++;
-                size++;
             }
             return true;
         } else {
             Entry<K, V> newEntry = new Entry(key, value);
             table[hash] = newEntry;
+            modCount++;
+            size++;
         }
         return false;
     }
 
     V get(K key) {
         int hash = key.hashCode() % (size - 1);
-        Entry entry = table[hash];
-        while (entry != null) {
-            if (entry.k.equals(key)) {
-                return (V) entry;
-            }
+        Entry<K, V> entry = table[hash];
+        if (entry != null && entry.k.equals(key)) {
+            return entry.v;
         }
         return null;
     }
