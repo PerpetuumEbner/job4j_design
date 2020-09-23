@@ -18,8 +18,8 @@ public class SimpleHash<K, V> implements Iterable {
             if (entry.k.equals(key)) {
                 entry.v = value;
                 modCount++;
+                return true;
             }
-            return true;
         } else {
             Entry<K, V> newEntry = new Entry(key, value);
             table[hash] = newEntry;
@@ -41,7 +41,7 @@ public class SimpleHash<K, V> implements Iterable {
     boolean delete(K key) {
         int hash = key.hashCode() % (size - 1);
         Entry entry = table[hash];
-        if (entry != null) {
+        if (entry != null && entry.k.equals(key)) {
             table[hash] = null;
             modCount++;
             size--;
