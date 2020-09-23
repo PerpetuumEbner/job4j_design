@@ -1,21 +1,24 @@
 package ru.job4j.tree;
+
 import java.util.*;
+
 class Tree<E> implements SimpleTree<E> {
     private final Node<E> root;
+
     Tree(final E root) {
         this.root = new Node<>(root);
     }
+
     @Override
     public boolean add(E parent, E child) {
         boolean rsl = false;
         if (findBy(child).isEmpty() && findBy(parent).isPresent()) {
-            findBy(parent).get().children.add(new Node<>(child));
+            root.children.add(new Node<>(child));
             rsl = true;
-        } else if (findBy(child).isPresent()) {
-            rsl = false;
         }
         return rsl;
     }
+
     @Override
     public Optional<Node<E>> findBy(E value) {
         Optional<Node<E>> rsl = Optional.empty();
