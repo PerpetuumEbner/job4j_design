@@ -25,6 +25,7 @@ public class SimpleHash<K, V> implements Iterable {
             table[hash] = newEntry;
             modCount++;
             size++;
+            return true;
         }
         return false;
     }
