@@ -21,6 +21,7 @@ public class Analize {
             }
 
             if (!mapCurrent.get(user.getId()).getName().equals(user.getName())
+                    && mapCurrent.containsKey(user.getId())
                     && mapCurrent.get(user.getId()).getName() != null) {
                 changed++;
             }
@@ -46,16 +47,8 @@ public class Analize {
             return id;
         }
 
-        public void setId(int id) {
-            this.id = id;
-        }
-
         public String getName() {
             return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
         }
 
         public User(int id, String name) {
