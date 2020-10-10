@@ -57,9 +57,8 @@ public class AnalizeTest {
                 new Analize.User(3, "Bob"));
 
         List<Analize.User> usersCurrent = Arrays.asList(
-                new Analize.User(1, ""),
-                new Analize.User(2, "Jon"),
-                new Analize.User(3, "Bob"));
+                new Analize.User(1, "Jon"),
+                new Analize.User(2, "Bob"));
 
         int deleted = userAnalize.diff(usersPrevious, usersCurrent).deleted;
         assertThat(deleted, is(1));
