@@ -16,17 +16,17 @@ public class Analize {
         Map<Integer, User> mapCurrent = current.stream().collect(Collectors.toMap(User::getId, user -> user));
         for (int i = 0; i < previous.size(); i++) {
             User user = previous.get(i);
-            mapCurrent.remove(i);
+            User mapUser = mapCurrent.get(user.getId());
 
-            if (mapCurrent.containsKey(user.getId())
+            if (mapCurrent.containsKey(mapUser.getId())
                     && !mapCurrent.get(user.getId()).getName().equals(user.getName())) {
                 changed++;
             }
-            if (user.getName() == null) {
+            if (!mapCurrent.containsKey(mapUser.getId())) {
                 deleted++;
-            } else {
-                added++;
             }
+            mapCurrent.remove(user.getId());
+            added = mapCurrent.size();
         }
 
         info.added = added;
