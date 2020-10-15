@@ -14,19 +14,16 @@ public class Analize {
         int deleted = 0;
 
         Map<Integer, User> mapCurrent = current.stream().collect(Collectors.toMap(User::getId, user -> user));
-        for (int i = 0; i < previous.size(); i++) {
-            User user = previous.get(i);
-            User mapUser = mapCurrent.get(user.getId());
-
-            if (mapCurrent.containsKey(mapUser.getId())
-                    && !mapCurrent.get(user.getId()).getName().equals(user.getName())) {
-                changed++;
-            }
-            if (!mapCurrent.containsKey(mapUser.getId())) {
+        for (User user : previous) {
+            User mapUser = mapCurrent.remove(user.getId());
+            if (mapUser == null) {
                 deleted++;
+            } else {
+                if (!mapUser.equals(user)) {
+                    changed++;
+                }
             }
-            mapCurrent.remove(user.getId());
-            added = mapCurrent.size();
+            added = current.size() + deleted - previous.size();
         }
 
         info.added = added;
