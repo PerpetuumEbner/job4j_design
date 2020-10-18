@@ -11,7 +11,7 @@ public class LogFilter {
             String line = br.readLine();
             while ((line != null)) {
                 if (line.contains("404")) {
-                    list.add(line);
+                    list.add(line + System.lineSeparator());
                 }
                 line = br.readLine();
             }
