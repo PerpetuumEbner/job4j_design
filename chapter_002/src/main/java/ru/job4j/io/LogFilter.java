@@ -23,7 +23,7 @@ public class LogFilter {
 
     public static void save(List<String> log, String file) {
         try (PrintWriter pw = new PrintWriter(new BufferedOutputStream(new FileOutputStream(file)))) {
-                pw.write(String.valueOf(log));
+            pw.write(String.valueOf(log));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
