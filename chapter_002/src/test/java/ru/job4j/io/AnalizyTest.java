@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.*;
+import java.util.StringJoiner;
 
 public class AnalizyTest {
     @Rule
@@ -26,11 +27,11 @@ public class AnalizyTest {
                     + "200 11:02:02");
         }
         new Analizy().unavailable(source.getAbsolutePath(), target.getAbsolutePath());
-        StringBuilder rsl = new StringBuilder();
+        StringJoiner sj = new StringJoiner(System.lineSeparator());
         try (BufferedReader br = new BufferedReader(new FileReader(target))) {
-            br.lines().forEach(rsl::append);
+            br.lines().forEach(sj::add);
         }
-        assertThat(rsl.toString(), is("10:58:01;10:59:01"
+        assertThat(sj.toString(), is("10:58:01;10:59:01" + System.lineSeparator()
                 + "11:01:02;11:02:02"));
     }
 }
