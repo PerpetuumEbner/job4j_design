@@ -19,7 +19,14 @@ public class Zip {
         }
     }
 
-    public static void main(String[] args) {
-        
+    public static void main(String[] args) throws IllegalAccessException {
+        ArgZip argZip = new ArgZip(args);
+        if (argZip.valid()) {
+            List<File> sources = Search.search(argZip.directory(), argZip.exclude());
+            File target = new File(argZip.output());
+            new Zip().packFiles(sources, target);
+        } else {
+            throw new IllegalAccessException();
+        }
     }
 }

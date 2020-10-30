@@ -1,43 +1,47 @@
 package ru.job4j.io;
 
+import java.io.File;
+
 public class ArgZip {
+
     private final String[] args;
 
     public ArgZip(String[] args) {
         this.args = args;
     }
 
-    public boolean valid() {
+    public boolean valid() throws IllegalAccessException {
+        directory();
+        exclude();
+        output();
+
         boolean rst = true;
         if (args.length != 3) {
             System.out.println("Parameters error.");
             rst = false;
         }
-
-        if (args[0].contains("-d") && args[1].contains("-e") && args[2].contains("-o")) {
-            return true;
-        }
         return rst;
     }
 
-    public String directory() {
-        if (args[0].contains("-d")) {
-            args[0] = "c:\\project\\job4j_design\\";
+    public String directory() throws IllegalAccessException {
+        File file = new File(args[0].substring(3));
+        if (!file.isDirectory()) {
+            throw new IllegalAccessException("Invalid directory.");
         }
-        return args[0];
+        return args[0].substring(3);
     }
 
-    public String exclude() {
-        if (args[1].contains("-e")) {
-            args[1] = "class";
+    public String exclude() throws IllegalAccessException {
+        if (!args[1].substring(3).equals(".xml")) {
+            throw new IllegalAccessException("Invalid extension");
         }
-        return args[1];
+        return args[1].substring(3);
     }
 
-    public String output() {
-        if (args[2].contains("-o")) {
-            args[2] = "project.zip";
+    public String output() throws IllegalAccessException {
+        if (!args[2].substring(3).contains(".zip")) {
+            throw new IllegalAccessException("Invalid extension");
         }
-        return args[2];
+        return args[2].substring(3);
     }
 }
