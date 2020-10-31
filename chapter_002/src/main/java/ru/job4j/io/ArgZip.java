@@ -2,7 +2,7 @@ package ru.job4j.io;
 
 import java.io.File;
 
-public class ArgZip {
+public class ArgZip  {
 
     private final String[] args;
 
@@ -32,7 +32,8 @@ public class ArgZip {
     }
 
     public String exclude() throws IllegalAccessException {
-        if (!args[1].substring(3).equals(".xml")) {
+        ArgsName argsName = ArgsName.of(args);
+        if (!(args[1].substring(3).equals(argsName.get("e")))) {
             throw new IllegalAccessException("Invalid extension");
         }
         return args[1].substring(3);
