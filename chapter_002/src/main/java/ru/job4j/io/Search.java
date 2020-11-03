@@ -11,6 +11,11 @@ public class Search {
         if (args.length == 0) {
             throw new IllegalArgumentException("Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
         }
+
+        if (args.length != 2) {
+            throw new IllegalArgumentException("Invalid number of arguments.");
+        }
+
         Path start = Paths.get(args[0]);
         String extension = args[1];
         search(start, extension).forEach(System.out::println);
