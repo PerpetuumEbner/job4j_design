@@ -3,6 +3,8 @@ package ru.job4j.io;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class ConsoleChat {
@@ -21,40 +23,46 @@ public class ConsoleChat {
     public void run() {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
              BufferedWriter bw = new BufferedWriter(new FileWriter(path, Charset.forName("WINDOWS-1251"), true))) {
+            List<String> logList = new LinkedList<>();
+            answerList(answer);
             String answers;
-            String phrase = br.readLine(); // вводим строку в консоль
+            String phrase = br.readLine();
+
             while (!phrase.equals(OUT)) {
                 if (!phrase.equals(STOP)) {
-                    answers = randomAnswer(botAnswers); // то ответ
-                    System.out.println(answers); // то выводим ответ
-                    bw.write(phrase + System.lineSeparator() + answers + System.lineSeparator()); // записывавет фразу и ответ
+                    answers = answer.get(randomKey());
+                    System.out.println(answers);
+                    logList.add(phrase + System.lineSeparator() + answers + System.lineSeparator());
                     phrase = br.readLine();
                 } else {
                     while (!phrase.equals(CONTINUE)) {
-                        bw.write(phrase + System.lineSeparator()); // записывавет фразу и продолжаем
+                        logList.add(phrase + System.lineSeparator());
                         phrase = br.readLine();
                     }
                 }
             }
-            bw.write(phrase + System.lineSeparator()); // записывавет фразу и заканчиваем
+            logList.add(phrase + System.lineSeparator());
+
+            for (String l : logList) {
+                bw.write(l);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public String randomAnswer(String file) {
+    public void answerList(Map<Integer, String> answerList) {
         int key = 0;
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(botAnswers))) {
             String line = br.readLine();
             while ((line != null)) {
-                answer.put(key, line);
+                answerList.put(key, line);
                 key++;
                 line = br.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return answer.get(randomKey());
     }
 
     public int randomKey() {
