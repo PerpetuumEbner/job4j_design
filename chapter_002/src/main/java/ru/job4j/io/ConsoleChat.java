@@ -21,8 +21,7 @@ public class ConsoleChat {
     }
 
     public void run() {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-             BufferedWriter bw = new BufferedWriter(new FileWriter(path, Charset.forName("WINDOWS-1251"), true))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             List<String> logList = new LinkedList<>();
             answerList(answer);
             String answers;
@@ -43,9 +42,13 @@ public class ConsoleChat {
             }
             logList.add(phrase + System.lineSeparator());
 
-            for (String l : logList) {
-                bw.write(l);
-            }
+            logList.forEach(l -> {
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, Charset.forName("WINDOWS-1251"), true))) {
+                    bw.write(l);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,8 +75,8 @@ public class ConsoleChat {
     }
 
     public static void main(String[] args) {
-        ConsoleChat cc = new ConsoleChat("C:\\projects\\job4j_design\\chapter_002\\src\\main\\resources\\log.txt",
-                "C:\\projects\\job4j_design\\chapter_002\\src\\main\\resources\\Answers.txt");
+        ConsoleChat cc = new ConsoleChat("./chapter_002/src/main/resources/log.txt",
+                "./chapter_002/src/main/resources/Answers.txt");
         cc.run();
     }
 }
