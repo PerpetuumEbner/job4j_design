@@ -17,9 +17,14 @@ public class EchoServer {
                     do {
                         str = in.readLine();
                         System.out.println(str);
-                        if (str.contains("Bye")) {
+                        if (str.contains("Exit")) {
                             socket.close();
                             runServer = false;
+                        }
+                        if (str.contains("Hello")) {
+                            out.write("Hello, dear friend".getBytes());
+                        } else {
+                            out.write(str.getBytes());
                         }
                     } while (!str.isEmpty());
                     out.write("HTTP/1.1 200 OK\r\n\\".getBytes());
