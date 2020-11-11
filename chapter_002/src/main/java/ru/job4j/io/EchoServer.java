@@ -16,18 +16,19 @@ public class EchoServer {
                     String str;
                     do {
                         str = in.readLine();
+                        System.out.println(str);
                         if (str.contains("Exit")) {
                             socket.close();
                             runServer = false;
                         }
                         if (str.contains("Hello")) {
-                            out.write("HTTP/1.1 200 OK\r\n\\".getBytes());
-                            out.write("Hello, dear friend".getBytes());
-                            System.out.println(str);
-                        } else {
-                            out.write("HTTP/1.1 200 OK\r\n\\".getBytes());
+                            str = "Hello, dear friend.";
+                            out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                             out.write(str.getBytes());
-                            System.out.println(str);
+                        }
+                        if (str.contains("HTTP") && !(str.contains("Hello") || str.contains("Exit"))) {
+                            out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                            out.write(str.substring(10, str.indexOf("HTTP")).getBytes());
                         }
                     } while (!str.isEmpty());
                 } catch (IOException e) {
