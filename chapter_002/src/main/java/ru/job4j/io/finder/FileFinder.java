@@ -12,8 +12,8 @@ import java.util.function.Predicate;
 import static java.nio.file.FileVisitResult.CONTINUE;
 
 public class FileFinder implements FileVisitor<Path> {
-    List<Path> list = new ArrayList<>();
-    Predicate<Path> predicate;
+    private final List<Path> list = new ArrayList<>();
+    private final Predicate<Path> predicate;
 
     public FileFinder(Predicate<Path> predicate) {
         this.predicate = predicate;
