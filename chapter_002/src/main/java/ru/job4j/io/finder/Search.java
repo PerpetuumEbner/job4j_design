@@ -12,8 +12,8 @@ public class Search {
         ArgsFile argsFile = new ArgsFile(args);
         argsFile.validate();
         Search search = new Search();
-        Predicate<Path> predicate;
-        List<Path> files = search.search(argsFile, predicate);
+        Predicate<Path> predicate = ParametersFactory.predicate(argsFile);
+        List<Path> files = search(argsFile, predicate);
         search.write(argsFile, files);
     }
 
