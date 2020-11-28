@@ -4,20 +4,24 @@ import java.util.Objects;
 import java.util.Set;
 
 public class User {
-    private String email;
+    private String name;
     private Set<User> user;
 
-    public User(String email, Set<User> user) {
-        this.email = email;
+    public User(String name) {
+        this.name = name;
+    }
+
+    public User(String name, Set<User> user) {
+        this.name = name;
         this.user = user;
     }
 
-    public String getEmail() {
-        return email;
+    public String getName() {
+        return name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<User> getUser() {
@@ -37,12 +41,12 @@ public class User {
             return false;
         }
         User user1 = (User) o;
-        return Objects.equals(email, user1.email)
+        return Objects.equals(name, user1.name)
                 && Objects.equals(user, user1.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email, user);
+        return Objects.hash(name, user);
     }
 }
