@@ -72,7 +72,7 @@ where d.id is null;
 --4. Используя left и right join написать запросы, которые давали бы одинаковый результат.
 select *
 from employees e
-         left join departments d on e.departments_id = d.id
+         left join departments d on e.departments_id = d.id;
 select *
 from departments d
          right join employees e on d.id = e.departments_id;
@@ -117,4 +117,5 @@ values ('Мария', false);
 
 select t1.name, t1.gender, t2.name, t2.gender
 from teens as t1
-         cross join teens as t2;
+         cross join teens as t2
+where t1.gender != t2.gender;
