@@ -1,0 +1,15 @@
+Petr Arsentev;parsentev@yandex.ru;
+Ivan Ivanov;iivanov@gmail.com;
+Anastasiya Aleksandrova;aaleksandrova@gmail.com;
+Nikita Alekseyev;nalekseyev@gmail.com;
+Polina Andreyeva;pandreyeva@gmail.com;
+Nadezhda Anisimova;nanisimova@gmail.com;
+Anton Arkhipov;aarkhipov@gmail.com;
+Dmitriy Afanasyev;dafanasyev@gmail.com;
+Mark Belyakov;mbelyakov@gmail.com;
+Leonid Blinov;lblinov@gmail.com;
+Polina Bogdanova;pbogdanova@gmail.com;
+Yuliya Bykova;ybykova@gmail.com;
+Polina Vasilyeva;pvasilyeva@gmail.com;
+Aleksandr Vlasov;avlasov@gmail.com;
+Nikita Volkov;nvolkov@gmail.com;
