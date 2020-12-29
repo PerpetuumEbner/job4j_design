@@ -10,6 +10,7 @@ import java.util.*;
 public class ImportDB {
     private Properties cfg;
     private String dump;
+    private Connection cnt;
 
     public ImportDB(Properties cfg, String dump) {
         this.cfg = cfg;
@@ -21,26 +22,35 @@ public class ImportDB {
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(line -> {
                 String[] user = line.split(";");
-                users.add(new User(user[0], user[1]));
+                if (user.length > 2 && user[0] != null && user[1] != null) {
+                    users.add(new User(user[0], user[1]));
+                }
             });
         }
         return users;
     }
 
-    public void save(List<User> users) throws ClassNotFoundException, SQLException {
-        Class.forName(cfg.getProperty("jdbc.driver"));
-        try (Connection cnt = DriverManager.getConnection(
-                cfg.getProperty("jdbc.url"),
-                cfg.getProperty("jdbc.username"),
-                cfg.getProperty("jdbc.password"))
-        ) {
-            for (User user : users) {
-                try (PreparedStatement ps = cnt.prepareStatement(
-                        "INSERT INTO spammer.public.users (name, email) VALUES (?, ?)")) {
-                    ps.setString(1, user.name);
-                    ps.setString(2, user.email);
-                    ps.executeUpdate();
-                }
+    public void connection() {
+        try {
+            Class.forName(cfg.getProperty("jdbc.driver"));
+            cnt = DriverManager.getConnection(
+                    cfg.getProperty("jdbc.url"),
+                    cfg.getProperty("jdbc.username"),
+                    cfg.getProperty("jdbc.password"));
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writes(List<User> users) {
+        for (User user : users) {
+            try (PreparedStatement ps = cnt.prepareStatement(
+                    "INSERT INTO spammer.public.users (name, email) VALUES (?, ?)")) {
+                ps.setString(1, user.name);
+                ps.setString(2, user.email);
+                ps.executeUpdate();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         }
     }
@@ -61,6 +71,7 @@ public class ImportDB {
             cfg.load(in);
         }
         ImportDB db = new ImportDB(cfg, "./chapter_003/src/main/resources/dump.txt");
-        db.save(db.load());
+        db.connection();
+        db.writes(db.load());
     }
 }
