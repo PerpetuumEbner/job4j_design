@@ -1,0 +1,105 @@
+1.  Используя разные ключи запуска виртуальной машины установить различные виды сборщика мусора.
+=== SerialGC ===
+"C:\Program Files\Java\jdk-13.0.2\bin\java.exe" "-Xlog:gc*" -XX:+UseSerialGC "-javaagent:C:\Program Files\JetBrains\JetBrains IntelliJ IDEA Ultimate 2020.1\lib\idea_rt.jar=50074:C:\Program Files\JetBrains\JetBrains IntelliJ IDEA Ultimate 2020.1\bin" -Dfile.encoding=UTF-8 -classpath C:\projects\job4j_design\chapter_004\target\classes;C:\Users\686\.m2\repository\log4j\log4j\1.2.17\log4j-1.2.17.jar;C:\Users\686\.m2\repository\org\slf4j\slf4j-log4j12\1.7.30\slf4j-log4j12-1.7.30.jar;C:\Users\686\.m2\repository\org\slf4j\slf4j-api\1.7.30\slf4j-api-1.7.30.jar;C:\Users\686\.m2\repository\com\google\code\gson\gson\2.8.6\gson-2.8.6.jar;C:\Users\686\.m2\repository\org\json\json\20200518\json-20200518.jar;C:\Users\686\.m2\repository\org\postgresql\postgresql\42.2.18\postgresql-42.2.18.jar;C:\Users\686\.m2\repository\org\checkerframework\checker-qual\3.5.0\checker-qual-3.5.0.jar ru.job4j.gc.GCUser
+[0.010s][info][gc] Using Serial
+[0.010s][info][gc,heap,coops] Heap address: 0x0000000700a00000, size: 4086 MB, Compressed Oops mode: Zero based, Oop shift amount: 3
+=== Environment state ===
+Free: 253
+Total: 259
+Size: 5
+=== Environment state ===
+Free: 252
+Total: 259
+Size: 7
+[0.175s][info][gc,heap,exit ] Heap
+[0.175s][info][gc,heap,exit ]  def new generation   total 78656K, used 8394K [0x0000000700a00000, 0x0000000705f50000, 0x0000000755c00000)
+[0.175s][info][gc,heap,exit ]   eden space 69952K,  12% used [0x0000000700a00000, 0x0000000701232b28, 0x0000000704e50000)
+[0.175s][info][gc,heap,exit ]   from space 8704K,   0% used [0x0000000704e50000, 0x0000000704e50000, 0x00000007056d0000)
+[0.175s][info][gc,heap,exit ]   to   space 8704K,   0% used [0x00000007056d0000, 0x00000007056d0000, 0x0000000705f50000)
+[0.175s][info][gc,heap,exit ]  tenured generation   total 174784K, used 0K [0x0000000755c00000, 0x00000007606b0000, 0x0000000800000000)
+[0.175s][info][gc,heap,exit ]    the space 174784K,   0% used [0x0000000755c00000, 0x0000000755c00000, 0x0000000755c00200, 0x00000007606b0000)
+[0.175s][info][gc,heap,exit ]  Metaspace       used 1108K, capacity 4663K, committed 4864K, reserved 1056768K
+[0.175s][info][gc,heap,exit ]   class space    used 112K, capacity 423K, committed 512K, reserved 1048576K
+
+
+=== ParallelGC ===
+"C:\Program Files\Java\jdk-13.0.2\bin\java.exe" "-Xlog:gc*" -XX:+UseParallelGC "-javaagent:C:\Program Files\JetBrains\JetBrains IntelliJ IDEA Ultimate 2020.1\lib\idea_rt.jar=50095:C:\Program Files\JetBrains\JetBrains IntelliJ IDEA Ultimate 2020.1\bin" -Dfile.encoding=UTF-8 -classpath C:\projects\job4j_design\chapter_004\target\classes;C:\Users\686\.m2\repository\log4j\log4j\1.2.17\log4j-1.2.17.jar;C:\Users\686\.m2\repository\org\slf4j\slf4j-log4j12\1.7.30\slf4j-log4j12-1.7.30.jar;C:\Users\686\.m2\repository\org\slf4j\slf4j-api\1.7.30\slf4j-api-1.7.30.jar;C:\Users\686\.m2\repository\com\google\code\gson\gson\2.8.6\gson-2.8.6.jar;C:\Users\686\.m2\repository\org\json\json\20200518\json-20200518.jar;C:\Users\686\.m2\repository\org\postgresql\postgresql\42.2.18\postgresql-42.2.18.jar;C:\Users\686\.m2\repository\org\checkerframework\checker-qual\3.5.0\checker-qual-3.5.0.jar ru.job4j.gc.GCUser
+[0.009s][info][gc] Using Parallel
+[0.011s][info][gc,heap,coops] Heap address: 0x0000000700a00000, size: 4086 MB, Compressed Oops mode: Zero based, Oop shift amount: 3
+=== Environment state ===
+Free: 252
+Total: 257
+Size: 5
+=== Environment state ===
+Free: 250
+Total: 257
+Size: 6
+[0.172s][info][gc,heap,exit ] Heap
+[0.172s][info][gc,heap,exit ]  PSYoungGen      total 76288K, used 7864K [0x00000007aae00000, 0x00000007b0300000, 0x0000000800000000)
+[0.172s][info][gc,heap,exit ]   eden space 65536K, 12% used [0x00000007aae00000,0x00000007ab5ae3b0,0x00000007aee00000)
+[0.172s][info][gc,heap,exit ]   from space 10752K, 0% used [0x00000007af880000,0x00000007af880000,0x00000007b0300000)
+[0.172s][info][gc,heap,exit ]   to   space 10752K, 0% used [0x00000007aee00000,0x00000007aee00000,0x00000007af880000)
+[0.172s][info][gc,heap,exit ]  ParOldGen       total 175104K, used 0K [0x0000000700a00000, 0x000000070b500000, 0x00000007aae00000)
+[0.172s][info][gc,heap,exit ]   object space 175104K, 0% used [0x0000000700a00000,0x0000000700a00000,0x000000070b500000)
+[0.172s][info][gc,heap,exit ]  Metaspace       used 1114K, capacity 4663K, committed 4864K, reserved 1056768K
+[0.172s][info][gc,heap,exit ]   class space    used 112K, capacity 423K, committed 512K, reserved 1048576K
+
+
+=== ConcMarkSweepGC ===
+"C:\Program Files\Java\jdk-13.0.2\bin\java.exe" "-Xlog:gc*" -XX:+UseConcMarkSweepGC "-javaagent:C:\Program Files\JetBrains\JetBrains IntelliJ IDEA Ultimate 2020.1\lib\idea_rt.jar=50247:C:\Program Files\JetBrains\JetBrains IntelliJ IDEA Ultimate 2020.1\bin" -Dfile.encoding=UTF-8 -classpath C:\projects\job4j_design\chapter_004\target\classes;C:\Users\686\.m2\repository\log4j\log4j\1.2.17\log4j-1.2.17.jar;C:\Users\686\.m2\repository\org\slf4j\slf4j-log4j12\1.7.30\slf4j-log4j12-1.7.30.jar;C:\Users\686\.m2\repository\org\slf4j\slf4j-api\1.7.30\slf4j-api-1.7.30.jar;C:\Users\686\.m2\repository\com\google\code\gson\gson\2.8.6\gson-2.8.6.jar;C:\Users\686\.m2\repository\org\json\json\20200518\json-20200518.jar;C:\Users\686\.m2\repository\org\postgresql\postgresql\42.2.18\postgresql-42.2.18.jar;C:\Users\686\.m2\repository\org\checkerframework\checker-qual\3.5.0\checker-qual-3.5.0.jar ru.job4j.gc.GCUser
+Java HotSpot(TM) 64-Bit Server VM warning: Option UseConcMarkSweepGC was deprecated in version 9.0 and will likely be removed in a future release.
+[0.010s][info][gc] Using Concurrent Mark Sweep
+[0.010s][info][gc,heap,coops] Heap address: 0x0000000700a00000, size: 4086 MB, Compressed Oops mode: Zero based, Oop shift amount: 3
+=== Environment state ===
+Free: 253
+Total: 259
+Size: 5
+=== Environment state ===
+Free: 252
+Total: 259
+Size: 7
+[0.162s][info][gc,heap,exit ] Heap
+[0.162s][info][gc,heap,exit ]  par new generation   total 78656K, used 8394K [0x0000000700a00000, 0x0000000705f50000, 0x000000072a390000)
+[0.162s][info][gc,heap,exit ]   eden space 69952K,  12% used [0x0000000700a00000, 0x0000000701232b30, 0x0000000704e50000)
+[0.162s][info][gc,heap,exit ]   from space 8704K,   0% used [0x0000000704e50000, 0x0000000704e50000, 0x00000007056d0000)
+[0.162s][info][gc,heap,exit ]   to   space 8704K,   0% used [0x00000007056d0000, 0x00000007056d0000, 0x0000000705f50000)
+[0.162s][info][gc,heap,exit ]  concurrent mark-sweep generation total 174784K, used 0K [0x000000072a390000, 0x0000000734e40000, 0x0000000800000000)
+[0.162s][info][gc,heap,exit ]  Metaspace       used 1113K, capacity 4663K, committed 4864K, reserved 1056768K
+[0.162s][info][gc,heap,exit ]   class space    used 112K, capacity 423K, committed 512K, reserved 1048576K
+
+
+=== G1GC ===
+"C:\Program Files\Java\jdk-13.0.2\bin\java.exe" "-Xlog:gc*" -XX:+UseG1GC "-javaagent:C:\Program Files\JetBrains\JetBrains IntelliJ IDEA Ultimate 2020.1\lib\idea_rt.jar=50139:C:\Program Files\JetBrains\JetBrains IntelliJ IDEA Ultimate 2020.1\bin" -Dfile.encoding=UTF-8 -classpath C:\projects\job4j_design\chapter_004\target\classes;C:\Users\686\.m2\repository\log4j\log4j\1.2.17\log4j-1.2.17.jar;C:\Users\686\.m2\repository\org\slf4j\slf4j-log4j12\1.7.30\slf4j-log4j12-1.7.30.jar;C:\Users\686\.m2\repository\org\slf4j\slf4j-api\1.7.30\slf4j-api-1.7.30.jar;C:\Users\686\.m2\repository\com\google\code\gson\gson\2.8.6\gson-2.8.6.jar;C:\Users\686\.m2\repository\org\json\json\20200518\json-20200518.jar;C:\Users\686\.m2\repository\org\postgresql\postgresql\42.2.18\postgresql-42.2.18.jar;C:\Users\686\.m2\repository\org\checkerframework\checker-qual\3.5.0\checker-qual-3.5.0.jar ru.job4j.gc.GCUser
+[0.008s][info][gc,heap] Heap region size: 1M
+[0.012s][info][gc     ] Using G1
+[0.012s][info][gc,heap,coops] Heap address: 0x0000000700a00000, size: 4086 MB, Compressed Oops mode: Zero based, Oop shift amount: 3
+[0.030s][info][gc           ] Periodic GC disabled
+=== Environment state ===
+Free: 265
+Total: 268
+Size: 2
+=== Environment state ===
+Free: 264
+Total: 268
+Size: 4
+[0.163s][info][gc,heap,exit ] Heap
+[0.163s][info][gc,heap,exit ]  garbage-first heap   total 262144K, used 3072K [0x0000000700a00000, 0x0000000800000000)
+[0.163s][info][gc,heap,exit ]   region size 1024K, 4 young (4096K), 0 survivors (0K)
+[0.163s][info][gc,heap,exit ]  Metaspace       used 1118K, capacity 4663K, committed 4864K, reserved 1056768K
+[0.163s][info][gc,heap,exit ]   class space    used 112K, capacity 423K, committed 512K, reserved 1048576K
+
+
+2. Оценить поведения срабатывания различных типов сборщиков мусора для программы из первого урока данной модуля.
+Создание 10 000 000 объектов:
+UseSerialGC - время работы 6.895s;
+UseParallelGC - время работы 9.418s (самый долгий);
+UseConcMarkSweepGC - время работы 5.938s;
+UseG1GC - время работы 4.029s (самый быстрый);
+
+
+3. Как вы считаете какой из сборщиков мусора подойдет наиболее оптимально для приложения заявок из второго модуля?
+ParallelGC.
+
+
+4. Какой тип сборщика будет оптимален для серверного приложения?
+G1 для небольших приложений, ZGC для крупных.
