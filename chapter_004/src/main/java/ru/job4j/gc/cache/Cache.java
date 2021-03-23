@@ -19,9 +19,10 @@ public class Cache {
         String string = null;
         StringBuilder stringBuilder = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(path + file))) {
-            while (br.lines() != null) {
-                stringBuilder.append(br.readLine());
-                string = stringBuilder.toString();
+            string = br.readLine();
+            while (string != null) {
+                stringBuilder.append(string);
+                string = br.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,11 +42,11 @@ public class Cache {
     private String get(String key) {
         String string;
         SoftReference<String> softReference = softCache.get(key);
-        if (softReference != null) {
+        if (softCache.containsKey(key)) {
             string = softReference.get();
         } else {
             string = read(key);
-            add(key);
+            softCache.put(key, new SoftReference<>(string));
         }
         return string;
     }
