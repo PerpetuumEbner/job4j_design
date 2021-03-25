@@ -40,11 +40,12 @@ public class Cache {
     }
 
     private String get(String key) {
-        String string;
+        String string = "";
         SoftReference<String> softReference = softCache.get(key);
         if (softCache.containsKey(key)) {
             string = softReference.get();
-        } else {
+        }
+        if (string == null || string.isEmpty()) {
             string = read(key);
             softCache.put(key, new SoftReference<>(string));
         }
