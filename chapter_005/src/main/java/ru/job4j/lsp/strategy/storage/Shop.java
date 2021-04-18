@@ -1,15 +1,15 @@
 package ru.job4j.lsp.strategy.storage;
 
+import ru.job4j.lsp.strategy.actions.Date;
 import ru.job4j.lsp.strategy.food.Food;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Shop implements Distribution {
-    List<Food> shop = new ArrayList<>();
-
+public class Shop implements Storage {
     @Override
-    public boolean add(Food food) {
-        return shop.add(food);
+    public boolean accept(Food food) {
+        if (Date.expirationDateCheck(food) > 75) {
+            food.setPrice(food.getPrice() - food.getDiscount());
+        }
+        return Date.expirationDateCheck(food) >= 25
+                && Date.expirationDateCheck(food) < 100;
     }
 }
