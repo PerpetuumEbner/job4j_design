@@ -1,8 +1,7 @@
 package ru.job4j.lsp.parking;
 
-public class Truck implements Type {
-    @Override
-    public boolean checkLength(Car car) {
-        return car.length > 1;
+public class Truck extends Car {
+    public Truck(String name, int length) {
+        super(name, length);
     }
 }
