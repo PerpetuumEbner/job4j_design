@@ -1,12 +1,16 @@
 package ru.job4j.lsp.parking;
 
-abstract class Car {
+public class Car {
     private String name;
     private int length;
 
     public Car(String name, int length) {
         this.name = name;
         this.length = length;
+    }
+
+    public Car(String name) {
+        this.name = name;
     }
 
     public String getName() {
