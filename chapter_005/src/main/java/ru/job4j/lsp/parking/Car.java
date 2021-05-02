@@ -1,5 +1,7 @@
 package ru.job4j.lsp.parking;
 
+import java.util.Objects;
+
 public class Car {
     private String name;
     private int length;
@@ -27,5 +29,22 @@ public class Car {
 
     public void setLength(int length) {
         this.length = length;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Car car = (Car) o;
+        return length == car.length && Objects.equals(name, car.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, length);
     }
 }
