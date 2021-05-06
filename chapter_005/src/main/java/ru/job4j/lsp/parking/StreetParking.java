@@ -15,21 +15,23 @@ public class StreetParking implements Parking {
 
     @Override
     public boolean park(Car car) {
-        if (car.getLength() < 1) {
+        boolean result = true;
+        if (car.getSize() < carSize) {
             throw new ArrayIndexOutOfBoundsException();
         }
-        if (car.getLength() == carSize) {
+        if (placesForCars < carPlaces.length && car.getSize() == carSize) {
             carPlaces[placesForCars++] = car;
-        } else {
-            if (car.getLength() < placesForTrucks) {
-                truckPlaces[placesForTrucks++] = car;
-            } else {
-                int size = car.getLength();
-                for (int index = 1; index < size; index++) {
-                    carPlaces[placesForCars++] = car;
-                }
-            }
         }
-        return true;
+        if (placesForTrucks < truckPlaces.length) {
+            truckPlaces[placesForTrucks++] = car;
+        } else if (placesForCars < carPlaces.length && car.getSize() > carSize) {
+            int size = car.getSize();
+            for (int index = 1; index < size; index++) {
+                carPlaces[placesForCars++] = car;
+            }
+        } else {
+            result = false;
+        }
+        return result;
     }
 }

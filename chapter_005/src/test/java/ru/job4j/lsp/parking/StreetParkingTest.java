@@ -18,8 +18,9 @@ public class StreetParkingTest {
     @Test
     public void whenUnsuccessfulPark() {
         Parking parking = new StreetParking(1, 2);
-        Car car = new Car("BMW", 4);
-        Assert.assertFalse(parking.park(car));
+        Car car = new Car("BMW", 1);
+        parking.park(car);
+        Assert.assertFalse(parking.park(new Car("VW", 1)));
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)

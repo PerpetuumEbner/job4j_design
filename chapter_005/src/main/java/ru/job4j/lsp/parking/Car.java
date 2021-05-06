@@ -4,15 +4,11 @@ import java.util.Objects;
 
 public class Car {
     private String name;
-    private int length;
+    private int size;
 
-    public Car(String name, int length) {
+    public Car(String name, int size) {
         this.name = name;
-        this.length = length;
-    }
-
-    public Car(String name) {
-        this.name = name;
+        this.size = size;
     }
 
     public String getName() {
@@ -23,12 +19,12 @@ public class Car {
         this.name = name;
     }
 
-    public int getLength() {
-        return length;
+    public int getSize() {
+        return size;
     }
 
-    public void setLength(int length) {
-        this.length = length;
+    public void setSize(int size) {
+        this.size = size;
     }
 
     @Override
@@ -40,11 +36,11 @@ public class Car {
             return false;
         }
         Car car = (Car) o;
-        return length == car.length && Objects.equals(name, car.name);
+        return size == car.size && Objects.equals(name, car.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, length);
+        return Objects.hash(name, size);
     }
 }
