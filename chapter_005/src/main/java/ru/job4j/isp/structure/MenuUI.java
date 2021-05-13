@@ -1,8 +1,6 @@
 package ru.job4j.isp.structure;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.NoSuchElementException;
 
 public class MenuUI implements Menu {
     private final Action action;
@@ -12,41 +10,39 @@ public class MenuUI implements Menu {
     }
 
     @Override
-    public void start() {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        boolean exit = true;
-        while (exit) {
-            System.out.println("Меню:");
-            String item = "";
-            String result = "";
+    public void add(String parentName, Item child) {
+        if (parentName.isEmpty()) {
+            action.getItem().add(new Item(parentName));
+        } else {
             for (Item items : action.getItem()) {
-                System.out.println(items.getName());
-            }
-            try {
-                item = br.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            for (int index = 0; index < action.getItem().size(); index++) {
-                String nameItem = action.getItem().get(index).getNumber();
-                if (nameItem.equals(item)) {
-                    System.out.println("Выбрана задача " + nameItem + System.lineSeparator());
-                    result = nameItem;
-                    break;
+                if (items.getName().equals(parentName)) {
+                    items.getList().add(child);
                 }
-                if (item.equals("Выход")) {
-                    exit = false;
-                    break;
-                }
-            }
-            if (!result.equals(item) && !item.equals("Выход")) {
-                System.out.println("Не верный номер задачи." + System.lineSeparator());
             }
         }
     }
 
+    @Override
+    public Item get(String name) {
+        Item result = null;
+        for (Item item : action.getItem()) {
+            if (item.getName().equals(name)) {
+                result = item;
+            }
+        }
+        if (result == null) {
+            throw new NoSuchElementException("Item no found");
+        }
+        return result;
+    }
+
+    @Override
+    public String print() {
+        StringBuilder stringBuilder = new StringBuilder();
+        return stringBuilder.toString();
+    }
+
     public static void main(String[] args) {
         Menu menu = new MenuUI(new MenuItem());
-        menu.start();
     }
 }
