@@ -11,12 +11,13 @@ public class MenuUI implements Menu {
 
     @Override
     public void add(String parentName, Item child) {
-        if (parentName.isEmpty()) {
+        if (action.getItem().isEmpty() || child == null) {
             action.getItem().add(new Item(parentName));
         } else {
             for (Item items : action.getItem()) {
                 if (items.getName().equals(parentName)) {
                     items.getList().add(child);
+                    break;
                 }
             }
         }
@@ -37,12 +38,23 @@ public class MenuUI implements Menu {
     }
 
     @Override
-    public String print() {
-        StringBuilder stringBuilder = new StringBuilder();
-        return stringBuilder.toString();
+    public void print() {
+        for (Item item : action.getItem()) {
+            System.out.println(item.getName());
+            for (Item items : item.getList()) {
+                System.out.println(items.getName());
+            }
+        }
     }
 
     public static void main(String[] args) {
         Menu menu = new MenuUI(new MenuItem());
+        menu.add("1.", null);
+        menu.add("2.", null);
+        menu.add("1.", new Item("1.1."));
+        menu.add("1.", new Item("1.2."));
+        menu.add("2.", new Item("2.1."));
+        menu.add("2.", new Item("2.2."));
+        menu.print();
     }
 }
