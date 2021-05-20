@@ -1,6 +1,6 @@
 package ru.job4j.isp.structure;
 
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class MenuUI implements Menu {
     private final Action action;
@@ -10,17 +10,13 @@ public class MenuUI implements Menu {
     }
 
     @Override
-    public void add(String parentName, Item child) {
-        if (action.getItem().isEmpty() || child == null) {
-            action.getItem().add(new Item(parentName));
-        } else {
-            for (Item items : action.getItem()) {
-                if (items.getName().equals(parentName)) {
-                    items.getList().add(child);
-                    break;
-                }
-            }
+    public boolean add(String parentName, Item child) {
+        boolean result = false;
+        if (findBy(parentName).isPresent() || findBy(child.getName()).isEmpty()) {
+            result = true;
         }
+        action.getItem().add(child);
+        return result;
     }
 
     @Override
@@ -35,6 +31,27 @@ public class MenuUI implements Menu {
             throw new NoSuchElementException("Item no found");
         }
         return result;
+    }
+
+    @Override
+    public Optional<Item> findBy(String name) {
+        Item result = null;
+        int index = 0;
+        while (index < action.getItem().size()) {
+            Item item = action.getItem().get(index);
+            List<Item> childList = item.getList();
+            for (Item items : childList) {
+                if (items.getName().equals(name)) {
+                    result = item;
+                    index = childList.size();
+                    break;
+                }
+            }
+            if (result == null) {
+                index++;
+            }
+        }
+        return Optional.ofNullable(result);
     }
 
     @Override
