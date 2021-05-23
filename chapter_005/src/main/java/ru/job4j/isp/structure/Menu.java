@@ -3,8 +3,11 @@ package ru.job4j.isp.structure;
 import java.util.Optional;
 
 public interface Menu {
-    boolean add(String parentName, Item child);
+    boolean add(Item parent, Item child);
+
     Item get(String name);
-    Optional<Item> findBy(String name);
+
+    Optional<Action> findBy(Item name);
+
     void print();
 }

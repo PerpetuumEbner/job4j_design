@@ -10,12 +10,13 @@ public class MenuUI implements Menu {
     }
 
     @Override
-    public boolean add(String parentName, Item child) {
+    public boolean add(Item parent, Item child) {
         boolean result = false;
-        if (findBy(parentName).isPresent() || findBy(child.getName()).isEmpty()) {
+        Optional<Action> parentItem = findBy(parent);
+        if (parentItem.isPresent() && findBy(child).isEmpty()) {
+            parentItem.get().getItem().add(child);
             result = true;
         }
-        action.getItem().add(child);
         return result;
     }
 
@@ -34,24 +35,19 @@ public class MenuUI implements Menu {
     }
 
     @Override
-    public Optional<Item> findBy(String name) {
-        Item result = null;
-        int index = 0;
-        while (index < action.getItem().size()) {
-            Item item = action.getItem().get(index);
-            List<Item> childList = item.getList();
-            for (Item items : childList) {
-                if (items.getName().equals(name)) {
-                    result = item;
-                    index = childList.size();
-                    break;
-                }
+    public Optional<Action> findBy(Item name) {
+        Optional<Action> result = Optional.empty();
+        Queue<Action> queue = new LinkedList<>();
+        queue.offer(this.action);
+        while (!queue.isEmpty()) {
+            Action item = queue.poll();
+            if (item.equals(name)) {
+                result = Optional.of(item);
+                break;
             }
-            if (result == null) {
-                index++;
-            }
+            queue.add(action);
         }
-        return Optional.ofNullable(result);
+        return result;
     }
 
     @Override
@@ -65,13 +61,13 @@ public class MenuUI implements Menu {
     }
 
     public static void main(String[] args) {
-        Menu menu = new MenuUI(new MenuItem());
-        menu.add("1.", null);
-        menu.add("2.", null);
-        menu.add("1.", new Item("1.1."));
-        menu.add("1.", new Item("1.2."));
-        menu.add("2.", new Item("2.1."));
-        menu.add("2.", new Item("2.2."));
+        Menu menu = new MenuUI(new MenuItem("root"));
+        menu.add(new Item("1"), new Item("1"));
+        menu.add(new Item("2"), new Item("2"));
+        menu.add(new Item("1"), new Item("1.1."));
+        menu.add(new Item("1"), new Item("1.2."));
+        menu.add(new Item("2"), new Item("2.1."));
+        menu.add(new Item("2"), new Item("2.2."));
         menu.print();
     }
 }
