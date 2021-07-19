@@ -10,10 +10,8 @@ public class ShellTest {
     @Test
     public void whenCdBack() {
         Shell shell = new Shell();
-        String[] path1 = "/user".split("/");
-        String[] path2 = "../root".split("/");
-        shell.cd(path1);
-        shell.cd(path2);
+        shell.cd("/user");
+        shell.cd("../root");
         assertThat(
                 shell.pwd(), is("/root")
         );
@@ -22,19 +20,15 @@ public class ShellTest {
     @Test
     public void whenAbsolutePath() {
         Shell shell = new Shell();
-        String[] path1 = "/path/to/file".split("/");
-        String[] path2 = "/new/path/to/my/file".split("/");
-        shell.cd(path1);
-        shell.cd(path2);
+        shell.cd("/path/to/file");
+        shell.cd("/new/path/to/my/file");
         assertThat(shell.pwd(), is("/new/path/to/my/file"));
     }
 
     @Test
     public void whenCdRoot() {
         Shell shell = new Shell();
-        String[] path = new String[1];
-        path[0] = "/";
-        shell.cd(path);
+        shell.cd("/");
         assertThat(
                 shell.pwd(), is("/")
         );
@@ -43,12 +37,8 @@ public class ShellTest {
     @Test
     public void whenCdUserLocal() {
         Shell shell = new Shell();
-        String[] pat1 = new String[1];
-        String[] pat2 = new String[1];
-        pat1[0] = "user";
-        pat2[0] = "local";
-        shell.cd(pat1);
-        shell.cd(pat2);
+        shell.cd("user");
+        shell.cd("local");
         assertThat(
                 shell.pwd(), is("/user/local")
         );
@@ -57,12 +47,8 @@ public class ShellTest {
     @Test
     public void whenCdUserBack() {
         Shell shell = new Shell();
-        String[] pat1 = new String[1];
-        String[] pat2 = new String[1];
-        pat1[0] = "user";
-        pat2[0] = "..";
-        shell.cd(pat1);
-        shell.cd(pat2);
+        shell.cd("user");
+        shell.cd("..");
         assertThat(
                 shell.pwd(), is("/")
         );

@@ -1,15 +1,16 @@
 package ru.job4j.io.cmd;
 
-import java.util.Stack;
+import java.util.Deque;
+import java.util.LinkedList;
 
 public class Dir {
-    private final Stack<String> listDir;
+    private final Deque<String> stack;
 
     public Dir() {
-        this.listDir = new Stack<>();
+        this.stack = new LinkedList<>();
     }
 
-    public Stack<String> getListDir() {
-        return listDir;
+    public Deque<String> getStack() {
+        return stack;
     }
 }

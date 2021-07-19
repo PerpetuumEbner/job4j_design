@@ -1,9 +1,7 @@
 package ru.job4j.io.cmd;
 
-import java.util.StringJoiner;
-
 public interface Commands {
-    void cd(String[] list);
+    void cd(String path);
 
-    StringJoiner pwd();
+    String pwd();
 }
