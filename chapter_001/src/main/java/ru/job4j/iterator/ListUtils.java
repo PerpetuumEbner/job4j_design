@@ -20,15 +20,8 @@ public class ListUtils<T> {
      * @param <T>   универтсальный тип.
      */
     public static <T> void addBefore(List<T> list, int index, T value) {
-        Objects.checkIndex(index, list.size());
-        ListIterator<T> listIterator = list.listIterator();
-        while (listIterator.hasNext()) {
-            if (listIterator.nextIndex() == index) {
-                listIterator.add(value);
-                break;
-            }
-            listIterator.next();
-        }
+        ListIterator<T> listIterator = list.listIterator(index);
+        listIterator.add(value);
     }
 
     /**
@@ -40,16 +33,8 @@ public class ListUtils<T> {
      * @param <T>   универтсальный тип.
      */
     public static <T> void addAfter(List<T> list, int index, T value) {
-        Objects.checkIndex(index, list.size());
-        ListIterator<T> listIterator = list.listIterator();
-        while (listIterator.hasNext()) {
-            if (listIterator.nextIndex() == index) {
-                listIterator.next();
-                listIterator.add(value);
-                break;
-            }
-            listIterator.next();
-        }
+        ListIterator<T> listIterator = list.listIterator(index + 1);
+        listIterator.add(value);
     }
 
     /**
@@ -95,15 +80,8 @@ public class ListUtils<T> {
      * @param <T>      универтсальный тип.
      */
     public static <T> void removeAll(List<T> list, List<T> elements) {
-        ListIterator<T> elementsIterator = elements.listIterator();
-        while (elementsIterator.hasNext()) {
-            ListIterator<T> listIterator = list.listIterator();
-            while (listIterator.hasNext()) {
-                if (elementsIterator.equals(listIterator.next())) {
-                    listIterator.remove();
-                }
-            }
-            elementsIterator.next();
+        for (T element : elements) {
+            list.remove(element);
         }
     }
 }
