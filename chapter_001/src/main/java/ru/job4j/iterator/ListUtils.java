@@ -80,8 +80,9 @@ public class ListUtils<T> {
      * @param <T>      универтсальный тип.
      */
     public static <T> void removeAll(List<T> list, List<T> elements) {
-        for (T element : elements) {
-            list.remove(element);
+        ListIterator<T> listIterator = elements.listIterator();
+        while (listIterator.hasNext()) {
+            list.remove(listIterator.next());
         }
     }
 }
