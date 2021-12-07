@@ -7,11 +7,7 @@ import java.io.File;
 
 public class CSVReader {
     private static ArgsName argsName;
-    private static Integer size;
-
-    public CSVReader() {
-        argsName = new ArgsName();
-    }
+    private static int size;
 
     public static boolean validate() throws IllegalAccessException {
         path();
@@ -31,7 +27,8 @@ public class CSVReader {
     }
 
     public static void delimiter() throws IllegalAccessException {
-        if (!argsName.get("delimiter").equals(";") || !argsName.get("delimiter").equals(",")) {
+        if (argsName.get("delimiter").equals(";" + System.lineSeparator())
+                || argsName.get("delimiter").equals("," + System.lineSeparator())) {
             throw new IllegalAccessException("Invalid delimiter");
         }
         size++;
@@ -40,7 +37,7 @@ public class CSVReader {
 
     public static void receiver() throws IllegalAccessException {
         File file = new File(argsName.get("out"));
-        if (!argsName.get("out").equals("stdout") || !file.isFile()) {
+        if (argsName.get("out").equals("stdout") || !file.isFile()) {
             throw new IllegalAccessException("Invalid parameter.");
         }
         size++;
@@ -56,6 +53,7 @@ public class CSVReader {
 
     public static void handle(ArgsName argsName) throws Exception {
         List<Integer> list = new ArrayList<>();
+        CSVReader.argsName = argsName;
         if (validate()) {
             try (Scanner scanner = new Scanner(argsName.get("path"))) {
                 scanner.useDelimiter(argsName.get("delimiter"));
