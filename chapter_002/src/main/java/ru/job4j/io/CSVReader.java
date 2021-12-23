@@ -1,5 +1,8 @@
 package ru.job4j.io;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -44,6 +47,7 @@ public class CSVReader {
     }
 
     public static void handle(ArgsName argsName) throws Exception {
+        StringBuilder stringBuilder = new StringBuilder();
         List<Integer> list = new ArrayList<>();
         CSVReader.argsName = argsName;
         if (validate()) {
@@ -51,15 +55,28 @@ public class CSVReader {
                 parse(list);
                 while (scanner.hasNext()) {
                     column = scanner.nextLine().split(argsName.get("delimiter"));
-                    for (int index = 0; index < list.size(); index++) {
-                        if (index == list.size() - 1) {
-                            System.out.print(column[index] + System.lineSeparator());
-                        } else {
-                            System.out.print(column[index] + ";");
+                    for (int i = 0; i < column.length; i++) {
+                        for (int index = 0; index < list.size(); index++) {
+                            if (i == list.get(index)) {
+                                if (index == list.size() - 1) {
+                                    stringBuilder.append(column[i]).append(System.lineSeparator());
+                                } else {
+                                    stringBuilder.append(column[i]).append(";");
+
+                                }
+                            }
                         }
                     }
                 }
+                writeCSV(String.valueOf(stringBuilder));
+                System.out.println(stringBuilder);
             }
+        }
+    }
+
+    public static void writeCSV(String string) throws IOException {
+        try (BufferedWriter bf = new BufferedWriter(new FileWriter(argsName.get("out")))) {
+            bf.write(string);
         }
     }
 
