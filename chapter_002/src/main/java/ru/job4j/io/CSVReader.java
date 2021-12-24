@@ -8,11 +8,23 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.File;
 
+/**
+ * Класс принимает параметры для считывания данных из CSV файла и записывает в другой файл.
+ *
+ * @author yustas
+ * @version 1.0
+ */
+
 public class CSVReader {
     private static ArgsName argsName;
     private static int size;
     private static String[] column;
 
+    /**
+     * Метод возвращает истину, если количество аргументов верное.
+     *
+     * @return возвращает истину, если условия соблюдены.
+     */
     public static boolean validate() throws IllegalAccessException {
         path();
         delimiter();
@@ -20,6 +32,11 @@ public class CSVReader {
         return size == 3;
     }
 
+    /**
+     * Метод возвращает путь файла, который необходимо прочитать.
+     *
+     * @return путь файла.
+     */
     public static String path() throws IllegalAccessException {
         File file = new File(argsName.get("path"));
         if (!file.exists()) {
@@ -29,6 +46,10 @@ public class CSVReader {
         return argsName.get("path");
     }
 
+    /**
+     * Метод проверяет условие равенства одного из разделителей. Если оно не выполняется, то ошибка
+     * IllegalAccessException.
+     */
     public static void delimiter() throws IllegalAccessException {
         if (argsName.get("delimiter").equals(";" + System.lineSeparator())
                 || argsName.get("delimiter").equals("," + System.lineSeparator())) {
@@ -38,6 +59,9 @@ public class CSVReader {
         argsName.get("delimiter");
     }
 
+    /**
+     * Метод проверяет наличие параметра, если он отсутствует, то ошибка IllegalAccessException.
+     */
     public static void filter() throws IllegalAccessException {
         if (argsName.get("filter").isEmpty()) {
             throw new IllegalAccessException("Invalid parameter.");
@@ -46,6 +70,12 @@ public class CSVReader {
         argsName.get("filter");
     }
 
+    /**
+     * Метод принимает параметры для их обработки. Данные считываются из CSV файла и необходимые столбцы записываются
+     * в другой файл.
+     *
+     * @param argsName аргументы которые находятся в карте ключ-значение.
+     */
     public static void handle(ArgsName argsName) throws Exception {
         StringBuilder stringBuilder = new StringBuilder();
         List<Integer> list = new ArrayList<>();
@@ -74,12 +104,22 @@ public class CSVReader {
         }
     }
 
+    /**
+     * Метод принимает строку и записывает её в файл.
+     *
+     * @param string строка, которую необходимо записать в файл.
+     */
     public static void writeCSV(String string) throws IOException {
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(argsName.get("out")))) {
             bf.write(string);
         }
     }
 
+    /**
+     * Метод записывает в список индексы столбцов, названия которых соответствуют переданному параметру.
+     *
+     * @param listArgs список куда записываются индексы столбцов.
+     */
     public static void parse(List<Integer> listArgs) throws Exception {
         try (Scanner scanner = new Scanner(new File(argsName.get("path")))) {
             column = scanner.nextLine().split(argsName.get("delimiter"));
