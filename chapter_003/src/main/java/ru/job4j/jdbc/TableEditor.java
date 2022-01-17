@@ -16,18 +16,10 @@ public class TableEditor implements AutoCloseable {
 
     private void initConnection() throws Exception {
         Class.forName("org.postgresql.Driver");
-        try (FileInputStream fis = new FileInputStream("./chapter_003/src/main/resources/app.properties")) {
-            properties.load(fis);
-            String url = properties.getProperty("jdbc.url");
-            String login = properties.getProperty("jdbc.username");
-            String password = properties.getProperty("jdbc.password");
-            try (Connection connection = DriverManager.getConnection(url, login, password)) {
-                DatabaseMetaData metaData = connection.getMetaData();
-                System.out.println(metaData.getUserName());
-                System.out.println(metaData.getURL());
-            }
-            connection = DriverManager.getConnection(url, login, password);
-        }
+        String url = properties.getProperty("jdbc.url");
+        String login = properties.getProperty("jdbc.username");
+        String password = properties.getProperty("jdbc.password");
+        connection = DriverManager.getConnection(url, login, password);
     }
 
     public void createTable(String tableName) throws Exception {
@@ -93,5 +85,6 @@ public class TableEditor implements AutoCloseable {
         System.out.println(getTableScheme(connection, "Table"));
         tableEditor.dropColumn("Table", "Column", "Type");
         tableEditor.renameColumn("Table", "Column", "New Column");
+        tableEditor.close();
     }
 }
