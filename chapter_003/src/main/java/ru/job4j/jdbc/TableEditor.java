@@ -15,7 +15,7 @@ public class TableEditor implements AutoCloseable {
     }
 
     private void initConnection() throws Exception {
-        Class.forName("org.postgresql.Driver");
+        Class.forName(properties.getProperty("jdbc.driver"));
         String url = properties.getProperty("jdbc.url");
         String login = properties.getProperty("jdbc.username");
         String password = properties.getProperty("jdbc.password");
@@ -23,7 +23,7 @@ public class TableEditor implements AutoCloseable {
     }
 
     public void createTable(String tableName) throws Exception {
-        request(String.format("create table %s;", tableName));
+        request(String.format("create table if not exists %s ();", tableName));
     }
 
     public void dropTable(String tableName) throws Exception {
@@ -75,16 +75,18 @@ public class TableEditor implements AutoCloseable {
     }
 
     public static void main(String[] args) throws Exception {
-        Properties properties = TableEditor.properties;
-        TableEditor tableEditor = new TableEditor(properties);
-        tableEditor.createTable("Table");
-        System.out.println(getTableScheme(connection, "Table"));
-        tableEditor.dropTable("Table");
-        System.out.println(getTableScheme(connection, "Table"));
-        tableEditor.addColumn("Table", "Column", "Type");
-        System.out.println(getTableScheme(connection, "Table"));
-        tableEditor.dropColumn("Table", "Column", "Type");
-        tableEditor.renameColumn("Table", "Column", "New Column");
-        tableEditor.close();
+        Properties properties = new Properties();
+        try (FileInputStream fis = new FileInputStream("./chapter_003/src/main/resources/app.properties")) {
+            properties.load(fis);
+            TableEditor tableEditor = new TableEditor(properties);
+            tableEditor.createTable("values");
+            System.out.println(getTableScheme(connection, "values"));
+            tableEditor.addColumn("values", "hour", "int");
+            System.out.println(getTableScheme(connection, "values"));
+            tableEditor.renameColumn("values", "hour", "minutes");
+            System.out.println(getTableScheme(connection, "values"));
+            tableEditor.dropTable("values");
+            tableEditor.close();
+        }
     }
 }
