@@ -76,21 +76,21 @@ INSERT INTO cars (id, yearofissue, type_id, brand_id, engine_id)
 VALUES (1, 2008, 1, 3, 1);
 
 INSERT INTO cars (id, yearofissue, type_id, brand_id, engine_id)
-VALUES (2, 2021, 3, 15, 2);
+VALUES (2, 2021, 3, 1, 2);
 
 INSERT INTO cars (id, yearofissue, type_id, brand_id, engine_id)
-VALUES (3, 2013, 2, 20, 1);
+VALUES (3, 2013, 2, 2, 1);
 
 INSERT INTO cars (id, yearofissue, type_id, brand_id, engine_id)
-VALUES (4, 2018, 3, 27, 2);
+VALUES (4, 2018, 3, 3, 2);
 
 INSERT INTO cars (id, yearofissue, type_id, brand_id, engine_id)
-VALUES (5, 2019, 1, 18, 1);
+VALUES (5, 2019, 1, 1, 1);
 
 create view view_add as
-select *
-from ads
-         join cars c on c.id = ads.car_id
-         join engines e on e.id = c.engine_id
-         join brands b on b.id = c.brand_id
+select b.name as model, t.name as type, e.name as engine, a.created, a.status, a.price, a.mileage
+from ads as a
+         join cars c on c.id = a.car_id
          join types t on t.id = c.type_id
+         join brands b on b.id = c.brand_id
+         join engines e on e.id = c.engine_id;
